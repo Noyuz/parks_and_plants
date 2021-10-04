@@ -8,21 +8,27 @@
 <div class="cards">
   <% @garden.plants.each do |plant| %>
     <div class="card-category" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('<%= plant.image_url %>')">
-      <h2><%= plant.name %></h2>
-      <% plant.tags.each do |tag| %>
-        <p><%= tag.name %></p>
-      <% end %>
-      <%= link_to "+", plant_path(plant), method: :delete, data: { confirm: "Are you sure?" }, class: "card-remove-link" %>
-      <%= link_to 'Add a tag', new_plant_plant_tag_path(plant) %>
+      <div class="card-text">
+        <h2 class="text-center"><%= plant.name %></h2>
+        <div class="text-center">
+          <% plant.tags.each do |tag| %>
+            <div class="tags"><%= icon('fas', 'tag') %> <%= tag.name %></div>
+          <% end %>
+        </div>
+      </div>
+      <div class="card-buttons">
+        <%= link_to 'Add a tag', new_plant_plant_tag_path(plant) %>
+        <%= link_to icon('fas', 'trash'), plant_path(plant), method: :delete, data: { confirm: "Are you sure?" }, class: "card-remove-link" %>
+      </div>
     </div>
   <% end %>
 </div>
 
 <div class="container">
   <div class="row justify-content-center">
-    <div class="col-4">
-      <h4>Add a plant:</h4>
-      <%= simple_form_for [ @garden, @plant ] do |f| %>
+    <div class="col-4 d-flex flex-column justify-content-center">
+      <button class="btn btn-primary toggle-form">Add a plant</button>
+      <%= simple_form_for([ @garden, @plant ] ) do |f| %>
         <%= f.input :name, placeholder: "Palm tree" %>
         <%= f.input :image_url, placeholder: "https://some_nice_image_found_on_google.jpg" %>
         <%= f.submit "Add", class: "btn btn-primary" %>

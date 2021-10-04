@@ -7,7 +7,15 @@ import Rails from "@rails/ujs"
 import Turbolinks from "turbolinks"
 import * as ActiveStorage from "@rails/activestorage"
 import "channels"
+import 'select2/dist/css/select2.css';
+import { multipleSelect } from "../components/select2";
+import { toggleForm } from "../components/form";
 
-Rails.start()
-Turbolinks.start()
-ActiveStorage.start()
+Turbolinks.start();
+
+document.addEventListener("turbolinks:load", function () {
+  Rails.start();
+  ActiveStorage.start();
+  multipleSelect();
+  toggleForm();
+})
